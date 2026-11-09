@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SignScan — скачать</title>
+<meta name="description" content="SignScan: сканер документов с подписью. Бесплатно, без рекламы.">
+<style>
+  :root { --bg:#f4f7fb; --card:#fff; --text:#14213d; --muted:#5b6475; --accent:#1a73e8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0f1520; --card:#1a2230; --text:#eef2f8; --muted:#a3adbd; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
+  main { max-width:440px; margin:0 auto; padding:40px 16px; text-align:center; }
+  img.icon { width:96px; height:96px; border-radius:22px; box-shadow:0 6px 20px rgba(0,0,0,.15); }
+  h1 { font-size:28px; margin:18px 0 6px; }
+  p { color:var(--muted); margin:0 0 28px; line-height:1.45; }
+  a.btn { display:block; padding:16px; margin:12px 0; border-radius:14px; background:var(--card); color:var(--text);
+          text-decoration:none; font-weight:600; font-size:17px; box-shadow:0 1px 4px rgba(0,0,0,.12); }
+  a.btn.main { background:var(--accent); color:#fff; }
+  .hidden { display:none; }
+  small { display:block; margin-top:28px; color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <img class="icon" src="../store/icon_512.png" alt="SignScan">
+  <h1>SignScan</h1>
+  <p id="lead">Сканируйте, подписывайте и отправляйте документы.<br>Бесплатно и без рекламы.</p>
+  <a class="btn" id="play" href="https://play.google.com/store/apps/details?id=com.signscanapp.scanner">Google Play</a>
+  <a class="btn" id="rustore" href="https://www.rustore.ru/catalog/app/com.signscanapp.scanner">RuStore</a>
+  <a class="btn hidden" id="appstore" href="https://apps.apple.com/app/id6832586023">App Store</a>
+  <small id="foot">Документы хранятся только на вашем телефоне.</small>
+</main>
+<script>
+  // Set to true when the iOS app is live in the App Store.
+  var APP_STORE_LIVE = false;
+  var ua = navigator.userAgent || "";
+  var ru = (navigator.language || "").toLowerCase().indexOf("ru") === 0;
+  if (!ru) {
+    document.documentElement.lang = "en";
+    document.title = "SignScan — download";
+    document.getElementById("lead").innerHTML = "Scan, sign and send documents.<br>Free and without ads.";
+    document.getElementById("foot").textContent = "Your documents stay on your phone.";
+  }
+  var ios = /iPhone|iPad|iPod/.test(ua);
+  var android = /Android/.test(ua);
+  var as = document.getElementById("appstore");
+  if (APP_STORE_LIVE) as.classList.remove("hidden");
+  var first = ios && APP_STORE_LIVE ? as : (ru && android ? document.getElementById("rustore") : document.getElementById("play"));
+  if (ios || android) first.classList.add("main");
+  if (ios && APP_STORE_LIVE) first.parentNode.insertBefore(first, document.getElementById("play"));
+  if (ru && android) first.parentNode.insertBefore(first, document.getElementById("play"));
+</script>
+</body>
+</html>
